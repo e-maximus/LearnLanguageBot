@@ -1,0 +1,13 @@
+module.exports = {
+  apps: [
+    {
+      name: 'inevitable-cool-bot',
+      script: './bot.js',
+      watch: true,
+      disable_trace: false,
+      env: {
+        API_KEY: ''
+      }
+    }
+  ]
+};
