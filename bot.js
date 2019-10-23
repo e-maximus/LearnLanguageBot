@@ -11,7 +11,7 @@ bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.on('text', (ctx) => {
     console.log(JSON.stringify(ctx.message), ctx.message.text.toLowerCase())
     if (ctx.message.text.toLowerCase().endsWith('нет')) {
-        ctx.reply(answerNo[Math.random(0, answerNo.length - 1)])
+        ctx.reply(answerNo[Math.floor(Math.random() * Math.floor(answerNo.length))])
     }
 })
 bot.launch()
