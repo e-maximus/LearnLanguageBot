@@ -1,17 +1,16 @@
 const Telegraf = require('telegraf')
-const answerNo = require('./answers/no')
 
-const bot = new Telegraf(process.env.API_KEY)
+const { textHandlers } = require('./handlers/')
+
+const bot = new Telegraf(process.env.BOT_KEY)
 bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on('sticker', (ctx) => {
-    console.log('Sticker: ', JSON.stringify(ctx.message))
-})
+bot.help((ctx) => ctx.reply('There is no help there! Go away.'))
+
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.on('text', (ctx) => {
     console.log(JSON.stringify(ctx.message), ctx.message.text.toLowerCase())
-    if (ctx.message.text.toLowerCase().endsWith('нет')) {
-        ctx.reply(answerNo[Math.floor(Math.random() * Math.floor(answerNo.length))])
+    for (let textHandler of textHandlers) {
+        textHandler(ctx)
     }
 })
 bot.launch()
