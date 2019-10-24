@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'inevitable-cool-bot',
-      script: './bot.js',
+      script: './bot.ts',
       watch: true,
       disable_trace: false,
       env: {

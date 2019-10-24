@@ -1,8 +1,8 @@
 {
-  "name": "LearningLanguageBot",
+  "name": "learning-language-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,5 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "telegraf": "^3.32.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "typescript": "^3.6.4"
   }
 }

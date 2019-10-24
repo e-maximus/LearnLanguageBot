@@ -1,4 +1,4 @@
-getAnswers = (thing) => {
+export default (thing: string) => {
   return [
     `Без сомнения у ${thing} есть диаметр!`,
     `Конечно нет! Откуда у ${thing} диаметр?`,
@@ -11,5 +11,3 @@ getAnswers = (thing) => {
     `Хмм .. мудрейший @sleepytm должен знать. Спроси у него`
   ]
 }
-
-module.exports = getAnswers

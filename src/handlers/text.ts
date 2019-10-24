@@ -1,14 +1,16 @@
-const answersNo = require('../answers/no')
-const getDiameterAnswers = require('../answers/diameter')
-const { randomNumber } = require('../utils/')
+import answersNo from '../answers/no'
+import getDiameterAnswers from '../answers/diameter'
+import { randomNumber } from '../utils'
 
-const noTextHandler = (context) => {
+import * as tfTypes from 'telegraf/typings/index'
+
+const noTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   if (context.message.text.toLowerCase().endsWith('нет')) {
     context.reply(answersNo[Math.floor(Math.random() * Math.floor(answersNo.length))])
   }
 }
 
-const diametrTextHandler = (context) => {
+const diametrTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   const matches = context.message.text.toLowerCase().match(/диаметр у ([^ ?]+)/)
   if (matches) {
     const choices = getDiameterAnswers(matches[1])
@@ -16,7 +18,7 @@ const diametrTextHandler = (context) => {
   }
 }
 
-module.exports = [
+export default [
   diametrTextHandler,
   noTextHandler
 ]
