@@ -10,6 +10,7 @@ module.exports = {
       script: './app/bot.js',
       watch: true,
       disable_trace: false,
+      fork_mode: true,
       env: commonEnv
     },
     {
@@ -17,6 +18,7 @@ module.exports = {
       script: 'app/scripts/bitcoinRate.js',
       watch: false,
       disable_trace: false,
+      fork_mode: true,
       cron: '* * * * *',
       autorestart: false,
       instances: 1,

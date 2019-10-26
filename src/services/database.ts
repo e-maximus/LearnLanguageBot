@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
 
-const database = new Sequelize('postgres://learninguser:Jhd736dB2360Ks1@localhost:5432/learning_bot');
+const database = new Sequelize(process.env.POSTGRES_CONNECT_URI);
 
 export default database
