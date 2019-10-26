@@ -1,13 +1,26 @@
+const commonEnv = {
+  BOT_KEY: '',
+  CRYPTOCOMPARE_API_KEY: ''
+}
+
 module.exports = {
   apps: [
     {
       name: 'inevitable-cool-bot',
-      script: './bot.ts',
+      script: './app/bot.js',
       watch: true,
       disable_trace: false,
-      env: {
-        BOT_KEY: ''
-      }
+      env: commonEnv
+    },
+    {
+      name: 'rates-cron-script',
+      script: 'app/scripts/bitcoinRate.js',
+      watch: false,
+      disable_trace: false,
+      cron: '* * * * *',
+      autorestart: false,
+      instances: 1,
+      env: commonEnv
     }
   ]
 };

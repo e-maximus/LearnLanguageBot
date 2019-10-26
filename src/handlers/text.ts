@@ -10,7 +10,7 @@ const noTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   }
 }
 
-const diametrTextHandler = (context: tfTypes.ContextMessageUpdate) => {
+const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   const matches = context.message.text.toLowerCase().match(/диаметр у ([^ ?]+)/)
   if (matches) {
     const choices = getDiameterAnswers(matches[1])
@@ -19,6 +19,6 @@ const diametrTextHandler = (context: tfTypes.ContextMessageUpdate) => {
 }
 
 export default [
-  diametrTextHandler,
+  diameterTextHandler,
   noTextHandler
 ]
