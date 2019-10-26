@@ -1,6 +1,7 @@
 import answersNo from '../answers/no'
 import getDiameterAnswers from '../answers/diameter'
 import { randomNumber } from '../utils'
+import CurrencyRate from "../models/currencyRate";
 
 import * as tfTypes from 'telegraf/typings/index'
 
@@ -18,7 +19,18 @@ const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   }
 }
 
+const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
+  const matches = context.message.text.toLowerCase().match(/bitcoin|битко[ий]н/)
+  if (matches) {
+    const latestRate = await CurrencyRate.findOne({
+      order: [ [ 'created_at', 'DESC' ]]
+    })
+    context.reply(`Bitcoin: ${latestRate.rate} USD`)
+  }
+}
+
 export default [
+  bitcoinTextHandler,
   diameterTextHandler,
   noTextHandler
 ]

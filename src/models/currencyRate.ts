@@ -11,17 +11,13 @@ CurrencyRate.init({
   rate: {
     type: Sequelize.DECIMAL(10, 2),
     allowNull: false
-  },
-  createdAt: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.NOW
   }
 }, {
   sequelize: database,
   timestamps: true,
   updatedAt: false,
-  modelName: 'currencyRate'
+  createdAt: 'created_at',
+  modelName: 'currency_rate'
 })
 
 export default CurrencyRate
