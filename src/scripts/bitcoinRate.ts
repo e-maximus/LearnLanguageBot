@@ -1,9 +1,10 @@
 import axios from 'axios'
-import database from '../services/database'
+import initApplication from '../services/'
 import CurrencyRate from "../models/currencyRate";
+
 const run = async () => {
   try {
-    await database.authenticate()
+    await initApplication()
 
     const rateClient = axios.create({
       baseURL: 'https://min-api.cryptocompare.com',
