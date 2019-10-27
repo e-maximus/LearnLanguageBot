@@ -1,7 +1,11 @@
 import * as Sequelize from 'sequelize'
 import database from '../services/database'
 
-class CurrencyRate extends Sequelize.Model {}
+class CurrencyRate extends Sequelize.Model {
+  id: number
+  rate: number
+  created_at: Date
+}
 CurrencyRate.init({
   id: {
     type: Sequelize.INTEGER,

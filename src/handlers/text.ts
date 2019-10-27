@@ -24,26 +24,29 @@ const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
   const bitcoin = context.message.text.toLowerCase().match(/bitcoin|битко[ий]н/)
   const prediction = context.message.text.toLowerCase().match(/prediction/)
   if (bitcoin) {
-
     if (prediction) {
       let value = 0
-      for (let i=0; i<=10; i++) {
-        value += Math.random() >= 0.5?Math.random():-Math.random()
+      for (let i=1; i<10; i++) {
+        value += Math.random()<=(10-i)/10? Math.random()>0.5?Math.random()*i:-Math.random()*i : 0
       }
       context.reply(`Bitcoin will ${value>=0?'grow':'fall'} by ${value.toFixed(2)}%`)
     } else {
-      const [currentRate, dayAgoRate] = await Promise.all([
+      const [currentRate, hourAgoRate, dayAgoRate] = await Promise.all([
         CurrencyRate.findOne({
           order: [ [ 'created_at', 'DESC' ]]
+        }),
+        CurrencyRate.findOne({
+          order: Sequelize.literal('abs(EXTRACT(EPOCH FROM NOW() - INTERVAL \'1 hour\') - EXTRACT(EPOCH FROM created_at))')
         }),
         CurrencyRate.findOne({
           order: Sequelize.literal('abs(EXTRACT(EPOCH FROM NOW() - INTERVAL \'1 day\') - EXTRACT(EPOCH FROM created_at))')
         }),
       ])
 
-      const change = (currentRate.rate/dayAgoRate.rate).toFixed(2)
+      const hourChange = parseFloat(((currentRate.rate - hourAgoRate.rate)/currentRate.rate*100).toFixed(2))
+      const dayChange = parseFloat(((currentRate.rate - dayAgoRate.rate)/currentRate.rate*100).toFixed(2))
 
-      context.reply(`${currentRate.rate} USD ${change>=0?'+':'-'}${change}%`)
+      context.reply(`${currentRate.rate} USD ${hourChange>=0?'+':'-'}${hourChange}% ${dayChange>=0?'+':'-'}${dayChange}%`)
     }
   }
 }
