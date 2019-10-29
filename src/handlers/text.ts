@@ -46,7 +46,7 @@ const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
       const hourChange = parseFloat(((currentRate.rate - hourAgoRate.rate)/currentRate.rate*100).toFixed(2))
       const dayChange = parseFloat(((currentRate.rate - dayAgoRate.rate)/currentRate.rate*100).toFixed(2))
 
-      context.reply(`${currentRate.rate} USD ${hourChange>=0?'+':'-'}${hourChange}% ${dayChange>=0?'+':'-'}${dayChange}%`)
+      context.reply(`${currentRate.rate} USD ${hourChange>=0?'+':''}${hourChange}% ${dayChange>=0?'+':''}${dayChange}%`)
     }
   }
 }
