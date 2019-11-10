@@ -1,6 +1,9 @@
 import Telegraf from 'telegraf'
 import textHandler from './handlers/text'
+import stickerHandler from './handlers/sticker'
+import photoHandler from './handlers/photo'
 import initApplication from './services/'
+import { downloadTelegramFile } from './services/files'
 
 import * as tfTypes from 'telegraf/typings'
 
@@ -17,6 +20,13 @@ const initializeBot = async () => {
       '\n - _нет$_ - random reply in rhyme'))
 
     bot.on('text', textHandler)
+    bot.on('sticker', stickerHandler)
+    bot.on('photo', photoHandler)
+
+    bot.command('settings', (context: tfTypes.ContextMessageUpdate) => {
+        console.log('Settings command: ', JSON.stringify(context.message))
+    })
+
 
     bot.launch()
 }

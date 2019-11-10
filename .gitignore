@@ -1,5 +1,6 @@
 ecosystem.config.js
 yarn-error.log
+.env.test
 .idea/
 node_modules/
 app/

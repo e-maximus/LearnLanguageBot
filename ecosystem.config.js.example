@@ -9,6 +9,7 @@ module.exports = {
       name: 'inevitable-cool-bot',
       script: './app/bot.js',
       watch: true,
+      ignore_watch : ['node_modules', 'files'],
       disable_trace: false,
       fork_mode: true,
       env: commonEnv
