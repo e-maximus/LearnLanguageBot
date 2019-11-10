@@ -7,7 +7,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "app",
     "baseUrl": ".",
     "paths": {
       "*": [
@@ -16,7 +15,8 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "tests/**/*"
   ],
   "exclude": [
     "node_modules/*"

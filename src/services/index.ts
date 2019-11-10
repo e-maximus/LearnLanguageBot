@@ -1,9 +1,12 @@
-import database from './database'
 import bluebird from 'bluebird'
+import databaseInit from './database'
+import { init as currencyRateInit } from '../models/currencyRate'
 
 const initApplication = async () => {
+  console.log('initApplication: ', Date.now())
   global.Promise = bluebird
-  await database.authenticate()
+  const database = databaseInit()
+  await currencyRateInit(database)
 }
 
 export default initApplication

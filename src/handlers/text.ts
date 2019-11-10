@@ -2,17 +2,17 @@ import Sequelize from 'sequelize'
 import answersNo from '../answers/no'
 import getDiameterAnswers from '../answers/diameter'
 import { randomNumber } from '../utils'
-import CurrencyRate from "../models/currencyRate";
+import { CurrencyRate } from '../models/currencyRate';
 
 import * as tfTypes from 'telegraf/typings/index'
 
-const noTextHandler = (context: tfTypes.ContextMessageUpdate) => {
+export const noTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   if (context.message.text.toLowerCase().endsWith('нет')) {
     context.reply(answersNo[Math.floor(Math.random() * Math.floor(answersNo.length))])
   }
 }
 
-const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
+export const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   const matches = context.message.text.toLowerCase().match(/диаметр [у ]*([^ ?]+)/)
   if (matches) {
     const choices = getDiameterAnswers(matches[1])
@@ -20,7 +20,7 @@ const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   }
 }
 
-const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
+export const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
   const bitcoin = context.message.text.toLowerCase().match(/bitcoin|битко[ий]н/)
   const prediction = context.message.text.toLowerCase().match(/prediction/)
   if (bitcoin) {

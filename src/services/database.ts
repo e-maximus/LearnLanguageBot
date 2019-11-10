@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize')
 
-console.log('process.env.POSTGRES_CONNECT_URI', process.env.POSTGRES_CONNECT_URI)
+let database = null;
 
-const database = new Sequelize(process.env.POSTGRES_CONNECT_URI);
-
-export default database
+export default () => {
+  database = new Sequelize(process.env.POSTGRES_CONNECT_URI)
+  return database
+}
