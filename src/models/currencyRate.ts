@@ -5,7 +5,7 @@ export class CurrencyRate extends Sequelize.Model {
   rate: number
   created_at: Date
 }
-export const init = async (database) => {
+export const init = async (database: Sequelize) => {
   CurrencyRate.init({
     id: {
       type: Sequelize.INTEGER,
