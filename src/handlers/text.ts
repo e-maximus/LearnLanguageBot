@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize'
 import answersNo from '../answers/no'
 import getDiameterAnswers from '../answers/diameter'
+import lenta from '../services/lenta'
 import { randomNumber } from '../utils'
 import { CurrencyRate } from '../models/currencyRate';
 
@@ -20,6 +21,18 @@ export const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
   }
 }
 
+export const lentaSaleTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
+  const matches = context.message.text.toLowerCase().match(/lenta/)
+  if (matches) {
+    const saleList =  await lenta()
+    context.reply(`Found ${saleList.length} items`)
+    while (saleList.length) {
+      await new Promise(s => setTimeout(() => s(), 1000))
+      context.replyWithMediaGroup(saleList.splice(0, 10))
+    }
+  }
+}
+
 export const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
   const bitcoin = context.message.text.toLowerCase().match(/bitcoin|битко[ий]н/)
   const prediction = context.message.text.toLowerCase().match(/prediction/)
@@ -31,22 +44,32 @@ export const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) 
       }
       context.reply(`Bitcoin will ${value>=0?'grow':'fall'} by ${value.toFixed(2)}%`)
     } else {
-      const [currentRate, hourAgoRate, dayAgoRate] = await Promise.all([
-        CurrencyRate.findOne({
-          order: [ [ 'created_at', 'DESC' ]]
-        }),
-        CurrencyRate.findOne({
-          order: Sequelize.literal('abs(EXTRACT(EPOCH FROM NOW() - INTERVAL \'1 hour\') - EXTRACT(EPOCH FROM created_at))')
-        }),
-        CurrencyRate.findOne({
-          order: Sequelize.literal('abs(EXTRACT(EPOCH FROM NOW() - INTERVAL \'1 day\') - EXTRACT(EPOCH FROM created_at))')
-        }),
-      ])
+      const result = await CurrencyRate.findOne({
+        order: [ [ 'created_at', 'DESC' ]]
+      })
 
-      const hourChange = parseFloat(((currentRate.rate - hourAgoRate.rate)/currentRate.rate*100).toFixed(2))
-      const dayChange = parseFloat(((currentRate.rate - dayAgoRate.rate)/currentRate.rate*100).toFixed(2))
+      try {
+          const [currentRate, hourAgoRate, dayAgoRate] = await Promise.all([
+            CurrencyRate.findOne({
+              order: [ [ 'created_at', 'DESC' ]]
+            }),
+            CurrencyRate.findOne({
+              order: Sequelize.literal('abs(EXTRACT(EPOCH FROM NOW() - INTERVAL \'1 hour\') - EXTRACT(EPOCH FROM created_at))')
+            }),
+            CurrencyRate.findOne({
+              order: Sequelize.literal('abs(EXTRACT(EPOCH FROM NOW() - INTERVAL \'1 day\') - EXTRACT(EPOCH FROM created_at))')
+            }),
+          ])
 
-      context.reply(`${currentRate.rate} USD ${hourChange>=0?'+':''}${hourChange}% ${dayChange>=0?'+':''}${dayChange}%`)
+        const hourChange = parseFloat(((currentRate.rate - hourAgoRate.rate)/currentRate.rate*100).toFixed(2))
+        const dayChange = parseFloat(((currentRate.rate - dayAgoRate.rate)/currentRate.rate*100).toFixed(2))
+
+        context.reply(`${currentRate.rate} USD ${hourChange>=0?'+':''}${hourChange}% ${dayChange>=0?'+':''}${dayChange}%`)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        console.log('Finally ')
+      }
     }
   }
 }
@@ -54,6 +77,7 @@ export const bitcoinTextHandler = async (context: tfTypes.ContextMessageUpdate) 
 const textHandlersList = [
   bitcoinTextHandler,
   diameterTextHandler,
+  lentaSaleTextHandler,
   noTextHandler
 ]
 

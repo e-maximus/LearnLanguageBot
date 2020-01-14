@@ -1,29 +1,45 @@
-const commonEnv = {
+/*
+POSTGRES_CONNECT_URI=postgres://login:pass@localhost:5432/learning_bot_test ./node_modules/mocha/bin/mocha ./tests/ --recursive --exit
+ */
+
+const testEnvParams = {
   BOT_KEY: '',
-  CRYPTOCOMPARE_API_KEY: ''
+  CRYPTOCOMPARE_API_KEY: '',
+  POSTGRES_CONNECT_URI: ''
+}
+const productionEnvParams = {
+  BOT_KEY: '',
+  CRYPTOCOMPARE_API_KEY: '',
+  POSTGRES_CONNECT_URI: ''
 }
 
 module.exports = {
+  testEnvParams,
   apps: [
     {
       name: 'inevitable-cool-bot',
-      script: './app/bot.js',
-      watch: true,
-      ignore_watch : ['node_modules', 'files'],
-      disable_trace: false,
+      script: './src/bot.js',
+      watch: ['src'],
       fork_mode: true,
-      env: commonEnv
+      disable_trace: false,
+      env: {
+        ...productionEnvParams,
+        NODE_ENV: 'development'
+      }
     },
     {
       name: 'rates-cron-script',
-      script: 'app/scripts/bitcoinRate.js',
+      script: './src/scripts/bitcoinRate.js',
       watch: false,
       disable_trace: false,
-      fork_mode: true,
       cron: '* * * * *',
       autorestart: false,
+      fork_mode: true,
       instances: 1,
-      env: commonEnv
+      env: {
+        ...productionEnvParams,
+        NODE_ENV: 'development'
+      }
     }
   ]
 };

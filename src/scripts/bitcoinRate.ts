@@ -1,6 +1,6 @@
 import axios from 'axios'
 import initApplication from '../services/'
-import CurrencyRate from "../models/currencyRate";
+import { CurrencyRate } from "../models/currencyRate";
 
 const run = async () => {
   try {

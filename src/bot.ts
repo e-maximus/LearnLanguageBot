@@ -16,8 +16,9 @@ const initializeBot = async () => {
     bot.help((context: tfTypes.ContextMessageUpdate) => context.replyWithMarkdown('List of available commands and reactions: \n\n*Reactions:* ' +
       '\n - _bitcoin|битко[ий]н_ - current bitcoin rate to USD and changes for the last 24 hours. example: _rate [hour change] [day change]_' +
       '\n - _bitcoin|битко[ий]н prediction_ - particularly well calculated prediction of bitcoin rate for 24 hours based on using Artificial Intelligence service' +
-      '\n - _диаметр [y ]\* anything_ - random phrase about a diameter of "anything"' +
-      '\n - _нет$_ - random reply in rhyme'))
+      '\n - _диаметр [y ]\* anything_ - random phrase about a diameter of "anything" ' +
+      '\n - _нет$_ - random reply in rhyme' +
+      '\n - _lenta_ - set of images of sale goods in Lenta today'))
 
     bot.on('text', textHandler)
     bot.on('sticker', stickerHandler)
