@@ -22,10 +22,10 @@ export const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
 }
 
 export const lentaSaleTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
-  const matches = context.message.text.toLowerCase().match(/lenta/)
+  const matches = context.message.text.toLowerCase().match(/lentasale/)
   if (matches) {
     const saleList =  await lenta()
-    context.reply(`Found ${saleList.length} items`)
+    // context.reply(`Found ${saleList.length} items`)
     while (saleList.length) {
       await new Promise(s => setTimeout(() => s(), 1000))
       context.replyWithMediaGroup(saleList.splice(0, 10))
