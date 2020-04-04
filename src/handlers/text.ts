@@ -22,7 +22,7 @@ export const diameterTextHandler = (context: tfTypes.ContextMessageUpdate) => {
 }
 
 export const lentaSaleTextHandler = async (context: tfTypes.ContextMessageUpdate) => {
-  const matches = context.message.text.toLowerCase().match(/lentasale/)
+  const matches = context.message.text.toLowerCase().match(/^lenta$/)
   if (matches) {
     const saleList =  await lenta()
     // context.reply(`Found ${saleList.length} items`)

@@ -18,7 +18,7 @@ const initializeBot = async () => {
       '\n - _bitcoin|битко[ий]н prediction_ - particularly well calculated prediction of bitcoin rate for 24 hours based on using Artificial Intelligence service' +
       '\n - _диаметр [y ]\* anything_ - random phrase about a diameter of "anything" ' +
       '\n - _нет$_ - random reply in rhyme' +
-      '\n - _lenta_ - set of images of sale goods in Lenta today'))
+      '\n - _^lenta$_ - set of images of sale goods in Lenta today'))
 
     bot.on('text', textHandler)
     bot.on('sticker', stickerHandler)
